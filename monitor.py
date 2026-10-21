@@ -32,13 +32,28 @@ def price(text):
     return (m.group(1).replace('.', ',') + ' €') if m else 'Prix non détecté'
 
 def send(subject, body):
-    host=os.environ['SMTP_HOST']; port=int(os.environ.get('SMTP_PORT','587'))
-    user=os.environ['SMTP_FROM']; pwd=os.environ['SMTP_PASSWORD']
-    dest=os.environ.get('ALERT_TO','doublecacaman@yopmail.com')
-    msg=EmailMessage(); msg['Subject']=subject; msg['From']=user; msg['To']=dest; msg.set_content(body)
-    ctx=ssl.create_default_context()
+    host = os.environ['SMTP_HOST']
+    port = int(os.environ.get('SMTP_PORT', '587'))
+    user = os.environ['SMTP_USER']
+    pwd = os.environ['SMTP_PASSWORD']
+    sender = os.environ['SMTP_FROM']
+    dest = os.environ.get(
+        'ALERT_TO',
+        'doublecacaman@yopmail.com'
+    )
+
+    msg = EmailMessage()
+    msg['Subject'] = subject
+    msg['From'] = sender
+    msg['To'] = dest
+    msg.set_content(body)
+
+    ctx = ssl.create_default_context()
+
     with smtplib.SMTP(host, port, timeout=30) as s:
-        s.starttls(context=ctx); s.login(user,pwd); s.send_message(msg)
+        s.starttls(context=ctx)
+        s.login(user, pwd)
+        s.send_message(msg)
 
 changed=False
 for item in CFG['products']:
