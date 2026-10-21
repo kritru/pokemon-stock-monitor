@@ -21,6 +21,7 @@ jobs:
           SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
           SMTP_FROM: ${{ secrets.SMTP_FROM }}
           ALERT_TO: doublecacaman@yopmail.com
+          TEST_EMAIL: "true"
         run: python monitor.py
       - name: Persist state
         run: |
