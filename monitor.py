@@ -33,7 +33,7 @@ def price(text):
 
 def send(subject, body):
     host=os.environ['SMTP_HOST']; port=int(os.environ.get('SMTP_PORT','587'))
-    user=os.environ['SMTP_USER']; pwd=os.environ['SMTP_PASSWORD']
+    user=os.environ['SMTP_FROM']; pwd=os.environ['SMTP_PASSWORD']
     dest=os.environ.get('ALERT_TO','doublecacaman@yopmail.com')
     msg=EmailMessage(); msg['Subject']=subject; msg['From']=user; msg['To']=dest; msg.set_content(body)
     ctx=ssl.create_default_context()
