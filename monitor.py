@@ -55,6 +55,17 @@ def send(subject, body):
         s.login(user, pwd)
         s.send_message(msg)
 
+if os.environ.get("TEST_EMAIL") == "true":
+    send(
+        "✅ Test Pokemon Stock Bot",
+        """Le système d'alerte fonctionne correctement.
+
+GitHub Actions -> Gmail SMTP -> Yopmail
+
+Si tu reçois ce message, la configuration SMTP du bot est opérationnelle.
+"""
+    )
+
 changed=False
 for item in CFG['products']:
     for page in item.get('urls',[]):
